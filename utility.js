@@ -132,15 +132,19 @@ module.exports = {
 			countPlayer++;
 		}
 
-		return {"countP": countPlayer, "countD": countDealer, "redCard": found};
+		return {"countP": countPlayer, "countD": countDealer, "redCard": found, "fichesPlayed": fichesPlayed};
 	},
 
 	//Control and ask for insurance after the dealer have an ace
-	insurance: function(dealer, fiches) {
+	insurance: function(dealer, fiches, fichesPlayed) {
+		insuranceValue = Math.floor(fichesPlayed/2);
+		console.log(insuranceValue);
 		if (dealer[0].value === "A") {
 			askInsurance = readline.keyInYNStrict("Do you want to insurance your play? (Cost 50% of fiches played)");
 			if (askInsurance) {
-				fiches = fiches - Math.floor(fiches/2);
+				fiches = fiches - insuranceValue;
+				console.log(fiches);
+				//TODO QUANDO STAMPA QUESTA STRINGA IL CONTEGGIO DELLE FICHES DA COME RISULTATO NaN RISOLVERE
 				console.log("Insurance accepted. Remains " + fiches + " fiches");
 			}
 		}

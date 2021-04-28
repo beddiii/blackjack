@@ -1,6 +1,5 @@
 const utility = require('./utility.js');
 const readline = require('readline-sync');
-const { stay } = require('./utility.js');
 
 //Number of decks
 const decks = [1, 2, 4, 6, 8];
@@ -58,9 +57,11 @@ while (fiches > 10) {
 	countPlayer = start.countP;
 	countDealer = start.countD;
 	redCardFound = start.found;
+	fiches = fiches - start.fichesPlayed;
 
 	if (player[0].value === "A" || player[1].value === "A") {
 		values = utility.countFirstValue(player, "player");
+		console.log("IL VALORE CALCOLATO È: " + values);
 		console.log("Player's cards: " + player[0].value + player[0].seeds + " " + player[1].value + player[1].seeds + ". Total: " + values.value1 + "/" + values.value2);
 	}
 	else {
@@ -75,6 +76,9 @@ while (fiches > 10) {
 		console.log("Dealer's cards: " + dealer[0].value + dealer[0].seeds + ". Total: " + utility.countFirstValue(dealer, "dealer"));
 	}
 
+	fiches = utility.insurance(dealer, fiches);
+	console.log("Now you have: " + fiches + " fiches.");
+
 	//Ask to player what he want to do between: hit, stay, double and
 	if (player[0].weight === player[1].weight) {
 		equal = true;
@@ -83,7 +87,7 @@ while (fiches > 10) {
 		switch (actionYesSplit[firstAction]) {
 			case "stay":
 				//INVOCA FUNZIONE PER STARE
-				//utility.stay(dealer, countDealer, deck);
+				utility.stay(dealer, countDealer, deck);
 				break;
 			case "hit":
 				//INVOCA FUNZIONE PER CHIEDERE CARTA
